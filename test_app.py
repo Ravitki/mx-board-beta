@@ -3,7 +3,12 @@ from app import app
 
 client = TestClient(app)
 
-def test_get_version():
-    response = client.get("/version")
+def test_read_main():
+    response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"version": "1.0.0"}
+    assert response.json() == {"message": "Hello, World!"}
+
+def test_healthz():
+    response = client.get("/healthz")
+    assert response.status_code == 200
+    assert response.json() == {"status": "up"}
